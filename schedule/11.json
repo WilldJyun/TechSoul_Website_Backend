@@ -1,0 +1,108 @@
+{
+    "items": [
+        {
+            "day": "1",
+            "teacher": "彭勇穗",
+            "course": "大学英语(1)",
+            "courseDescription": "综合教程U3",
+            "section": "08,09",
+            "address": "教1-514B"
+        },
+        {
+            "day": "1",
+            "teacher": "庄丽贤",
+            "course": "国家安全教育",
+            "courseDescription": "",
+            "section": "03,04",
+            "address": "3号大教室"
+        },
+        {
+            "day": "1",
+            "teacher": "袁慧芳",
+            "course": "中国近现代史纲要",
+            "courseDescription": " 第五章：中国革命的新道路（第七专题：星星之火可以燎原）1.中国共产党对革命新道路的探索。2.中国革命在曲折中前进。马克思主义中国化与中国革命新道路的形成。",
+            "section": "06,07",
+            "address": "教3-201"
+        },
+        {
+            "day": "1",
+            "teacher": "郑儒东",
+            "course": "工科数学分析(1)",
+            "courseDescription": "习题课",
+            "section": "01,02",
+            "address": "教1-310"
+        },
+        {
+            "day": "2",
+            "teacher": "郑儒东",
+            "course": "工科数学分析(1)",
+            "courseDescription": "第四章 微分中值定理与导数的应用 4.1 微分中值定理",
+            "section": "01,02",
+            "address": "教1-316"
+        },
+        {
+            "day": "3",
+            "teacher": "黄益",
+            "course": "体育(1)",
+            "courseDescription": "1、复习行进间运球投篮技术；2、学习行进间双手胸前传球；3、教学比赛、发展身体素质。",
+            "section": "03,04",
+            "address": ""
+        },
+        {
+            "day": "3",
+            "teacher": "杨淑伶",
+            "course": "线性代数",
+            "courseDescription": "第3章 线性方程组的解 3.1 消元法  3.2 线性方程组解的判定 【思政元素融入点】 让学生了解方程组求解过程中，虽然形式发生了变化，但是解并没有发生变化，注意以&ldquo;变&rdquo;为突破，以&ldquo;不变&rdquo;为根基的解决方法，知道形变而质不变的道理。",
+            "section": "08,09",
+            "address": "教3-210"
+        },
+        {
+            "day": "3",
+            "teacher": "郑儒东",
+            "course": "工科数学分析(1)",
+            "courseDescription": "4.2 洛必达法则",
+            "section": "06,07",
+            "address": "教1-316"
+        },
+        {
+            "day": "4",
+            "teacher": "彭勇穗",
+            "course": "大学英语(1)",
+            "courseDescription": "综合教程U3",
+            "section": "03,04",
+            "address": "教1-333"
+        },
+        {
+            "day": "4",
+            "teacher": "徐喆",
+            "course": "军事理论",
+            "courseDescription": "",
+            "section": "06,07",
+            "address": "3号大教室"
+        },
+        {
+            "day": "5",
+            "teacher": "卢永毅",
+            "course": "专业导论",
+            "courseDescription": "生物医学信息处理与应用2",
+            "section": "06,07",
+            "address": "教2-208"
+        },
+        {
+            "day": "5",
+            "teacher": "杨淑伶",
+            "course": "线性代数",
+            "courseDescription": "3.3 线性方程组解的结构",
+            "section": "01,02",
+            "address": "教3-210"
+        },
+        {
+            "day": "5",
+            "teacher": "郑儒东",
+            "course": "工科数学分析(1)",
+            "courseDescription": "4.3 泰勒公式",
+            "section": "03,04",
+            "address": "教1-316"
+        }
+    ]
+}

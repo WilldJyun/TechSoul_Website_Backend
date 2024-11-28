@@ -1,0 +1,52 @@
+{
+    "items": [
+        {
+            "day": "2",
+            "teacher": "郑儒东",
+            "course": "工科数学分析(1)",
+            "courseDescription": "2.2 函数的极限",
+            "section": "01,02",
+            "address": "教1-316"
+        },
+        {
+            "day": "3",
+            "teacher": "黄益",
+            "course": "体育(1)",
+            "courseDescription": "体质测试线上宣讲",
+            "section": "03,04",
+            "address": ""
+        },
+        {
+            "day": "3",
+            "teacher": "王焕",
+            "course": "形势与政策",
+            "courseDescription": "",
+            "section": "08,09",
+            "address": "教3-210"
+        },
+        {
+            "day": "3",
+            "teacher": "郑儒东",
+            "course": "工科数学分析(1)",
+            "courseDescription": "2.3 极限的性质，无穷小与无穷大",
+            "section": "06,07",
+            "address": "教1-316"
+        },
+        {
+            "day": "4",
+            "teacher": "彭勇穗",
+            "course": "大学英语(1)",
+            "courseDescription": "综合教程U1",
+            "section": "03,04",
+            "address": "教1-333"
+        },
+        {
+            "day": "4",
+            "teacher": "袁慧芳",
+            "course": "中国近现代史纲要",
+            "courseDescription": "第一章三四节（第二专题近代中国的磨难与抗争），3、反抗外国武装侵略的斗争； 4.反侵略战争的失败与民族意识的觉醒。讨论：经济落后的国家要不要进行反侵略的民族战争？（民族意识与民族精神的觉醒。）",
+            "section": "08,09",
+            "address": "教3-201"
+        }
+    ]
+}

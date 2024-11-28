@@ -1,0 +1,108 @@
+{
+    "items": [
+        {
+            "day": "1",
+            "teacher": "彭勇穗",
+            "course": "大学英语(1)",
+            "courseDescription": "视听说U1",
+            "section": "08,09",
+            "address": "教1-514B"
+        },
+        {
+            "day": "1",
+            "teacher": "袁慧芳",
+            "course": "中国近现代史纲要",
+            "courseDescription": " 第三章（第四专题）：辛亥革命与君主专制制度的终结1.举起近代民族民主革命的旗帜。孙中山的革命生涯与其爱国主义精神。小组实践作业展示。",
+            "section": "06,07",
+            "address": "教3-201"
+        },
+        {
+            "day": "1",
+            "teacher": "郑儒东",
+            "course": "工科数学分析(1)",
+            "courseDescription": "2.7 函数的连续性 (2.7.2, 2.7.3, 2.7.4)",
+            "section": "01,02",
+            "address": "教1-310"
+        },
+        {
+            "day": "2",
+            "teacher": "郑儒东",
+            "course": "工科数学分析(1)",
+            "courseDescription": "附录：实数理论的几个基本定理",
+            "section": "01,02",
+            "address": "教1-316"
+        },
+        {
+            "day": "3",
+            "teacher": "黄益",
+            "course": "体育(1)",
+            "courseDescription": "1、复习原地双手胸前传接球技术；2、学习原地单手肩上投篮；3、教学比赛，发展身体素质；增强灵敏素质，提高反应力和灵敏度。",
+            "section": "03,04",
+            "address": ""
+        },
+        {
+            "day": "3",
+            "teacher": "杨淑伶",
+            "course": "线性代数",
+            "courseDescription": "1.4 克拉默法则    习题课",
+            "section": "08,09",
+            "address": "教3-210"
+        },
+        {
+            "day": "3",
+            "teacher": "郑儒东",
+            "course": "工科数学分析(1)",
+            "courseDescription": "附录：一致连续",
+            "section": "06,07",
+            "address": "教1-316"
+        },
+        {
+            "day": "4",
+            "teacher": "彭勇穗",
+            "course": "大学英语(1)",
+            "courseDescription": "综合教程U2",
+            "section": "03,04",
+            "address": "教1-333"
+        },
+        {
+            "day": "4",
+            "teacher": "廖瑞东",
+            "course": "劳动教育",
+            "courseDescription": "",
+            "section": "08,09",
+            "address": "教3-202"
+        },
+        {
+            "day": "5",
+            "teacher": "陈添水",
+            "course": "专业导论",
+            "courseDescription": "智慧城市与应用1",
+            "section": "06,07",
+            "address": "教2-208"
+        },
+        {
+            "day": "5",
+            "teacher": "湛珏颖",
+            "course": "大学生职业规划与创业教育",
+            "courseDescription": "艰难的职业认知。通过本节的学习，让学生意识到自身职业认知缺乏的原因和职业认知的重要性，引导学生通过各种方法、手段来了解职业，了解所处的环境，掌握如何充分利用资源帮助自己实现职业目标。",
+            "section": "03,04",
+            "address": "教4-206"
+        },
+        {
+            "day": "5",
+            "teacher": "袁慧芳",
+            "course": "中国近现代史纲要",
+            "courseDescription": "第三章第二三节（第四专题辛亥革命的成与败）2.辛亥革命与中华民国的建立3.北洋军阀的统治与旧民主主义革命的失败。民主共和精神的时代影响。",
+            "section": "08,09",
+            "address": "教3-201"
+        },
+        {
+            "day": "5",
+            "teacher": "杨淑伶",
+            "course": "线性代数",
+            "courseDescription": "第2章 矩阵及其运算 2.1 矩阵的概念  2.2 矩阵的运算 【思政元素融入点】：矩阵是将数排成行列的数表，体现了整洁之美。",
+            "section": "01,02",
+            "address": "教3-210"
+        }
+    ]
+}

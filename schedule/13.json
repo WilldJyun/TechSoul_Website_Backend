@@ -1,0 +1,108 @@
+{
+    "items": [
+        {
+            "day": "1",
+            "teacher": "彭勇穗",
+            "course": "大学英语(1)",
+            "courseDescription": "综合教程U4",
+            "section": "08,09",
+            "address": "教1-514B"
+        },
+        {
+            "day": "1",
+            "teacher": "庄丽贤",
+            "course": "国家安全教育",
+            "courseDescription": "",
+            "section": "03,04",
+            "address": "3号大教室"
+        },
+        {
+            "day": "1",
+            "teacher": "袁慧芳",
+            "course": "中国近现代史纲要",
+            "courseDescription": "第六章中华民族的抗日战争（第八专题）4.抗日战争的中流砥柱5.抗日战争的胜利及其意义。总结伟大的抗战精神。",
+            "section": "06,07",
+            "address": "教3-201"
+        },
+        {
+            "day": "1",
+            "teacher": "郑儒东",
+            "course": "工科数学分析(1)",
+            "courseDescription": "一元微分学测验",
+            "section": "01,02",
+            "address": "教1-310"
+        },
+        {
+            "day": "2",
+            "teacher": "郑儒东",
+            "course": "工科数学分析(1)",
+            "courseDescription": "第五章 不定积分 5.1 原函数与不定积分",
+            "section": "01,02",
+            "address": "教1-316"
+        },
+        {
+            "day": "3",
+            "teacher": "黄益",
+            "course": "体育(1)",
+            "courseDescription": "1、复习行进间运球投篮技术；2、传、运、投综合技术运用3、教学比赛、发展身体素质。",
+            "section": "03,04",
+            "address": ""
+        },
+        {
+            "day": "3",
+            "teacher": "杨淑伶",
+            "course": "线性代数",
+            "courseDescription": "4.4 向量空间   本章习题课",
+            "section": "08,09",
+            "address": "教3-210"
+        },
+        {
+            "day": "3",
+            "teacher": "郑儒东",
+            "course": "工科数学分析(1)",
+            "courseDescription": "5.2 换元积分法",
+            "section": "06,07",
+            "address": "教1-316"
+        },
+        {
+            "day": "4",
+            "teacher": "彭勇穗",
+            "course": "大学英语(1)",
+            "courseDescription": "综合教程U4",
+            "section": "03,04",
+            "address": "教1-333"
+        },
+        {
+            "day": "4",
+            "teacher": "徐喆",
+            "course": "军事理论",
+            "courseDescription": "",
+            "section": "06,07",
+            "address": "3号大教室"
+        },
+        {
+            "day": "5",
+            "teacher": "杨志景",
+            "course": "专业导论",
+            "courseDescription": "遥感信息处理及应用2",
+            "section": "06,07",
+            "address": "教2-208"
+        },
+        {
+            "day": "5",
+            "teacher": "杨淑伶",
+            "course": "线性代数",
+            "courseDescription": "5.1 特征值与特征向量",
+            "section": "01,02",
+            "address": "教3-210"
+        },
+        {
+            "day": "5",
+            "teacher": "郑儒东",
+            "course": "工科数学分析(1)",
+            "courseDescription": "5.3 分部积分法",
+            "section": "03,04",
+            "address": "教1-316"
+        }
+    ]
+}

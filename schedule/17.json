@@ -1,0 +1,68 @@
+{
+    "items": [
+        {
+            "day": "1",
+            "teacher": "袁慧芳",
+            "course": "中国近现代史纲要",
+            "courseDescription": "第十一专题  决定当代中国命运的关键一招。第九章：改革开放与中国特色社会主义的开创和发展 1.历史性的伟大转折和改革开放的起步；2.改革开放和社会主义建设的新局面；3.把中国特色社会主义全面推向21世纪 4.在新的形势下坚持和发展中国特色社会主义。将改革进行到底，坚持改革开放精神。",
+            "section": "06,07",
+            "address": "教3-201"
+        },
+        {
+            "day": "1",
+            "teacher": "郑儒东",
+            "course": "工科数学分析(1)",
+            "courseDescription": "第七章 微分方程 7.1 微分方程的基本概念 7.2 一阶微分方程(7.2.1, 7.2.2)",
+            "section": "01,02",
+            "address": "教1-310"
+        },
+        {
+            "day": "2",
+            "teacher": "郑儒东",
+            "course": "工科数学分析(1)",
+            "courseDescription": "7.2 一阶微分方程(7.2.3, 7.2.4)",
+            "section": "01,02",
+            "address": "教1-316"
+        },
+        {
+            "day": "3",
+            "teacher": "黄益",
+            "course": "体育(1)",
+            "courseDescription": "1、考试；2、教学比赛、发展身体素质；过篮球运动集体项目的竞赛、培养学生的规则意识，上升到遵纪守法的意识培养。",
+            "section": "03,04",
+            "address": ""
+        },
+        {
+            "day": "3",
+            "teacher": "郑儒东",
+            "course": "工科数学分析(1)",
+            "courseDescription": "7.3 几种可积的高阶微分方程",
+            "section": "06,07",
+            "address": "教1-316"
+        },
+        {
+            "day": "4",
+            "teacher": "彭勇穗",
+            "course": "大学英语(1)",
+            "courseDescription": "综合教程U6",
+            "section": "03,04",
+            "address": "教1-333"
+        },
+        {
+            "day": "4",
+            "teacher": "徐喆",
+            "course": "军事理论",
+            "courseDescription": "",
+            "section": "06,07",
+            "address": "3号大教室"
+        },
+        {
+            "day": "5",
+            "teacher": "郑儒东",
+            "course": "工科数学分析(1)",
+            "courseDescription": "7.4 线性微分方程及其通解的结构",
+            "section": "03,04",
+            "address": "教1-316"
+        }
+    ]
+}

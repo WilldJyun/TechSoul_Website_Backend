@@ -1,0 +1,60 @@
+{
+    "items": [
+        {
+            "day": "1",
+            "teacher": "袁慧芳",
+            "course": "中国近现代史纲要",
+            "courseDescription": "第十二专题  建设社会主义现代化强国。第十章：中国特色社会主义进入新时代 1.开拓更加广阔的前景；2. 夺取新时代中国特色社会主义伟大胜利；3. 全面建成小康社会和开启全面建设社会主义现代化国家新征程。积极推进中国式现代化。",
+            "section": "06,07",
+            "address": "教3-201"
+        },
+        {
+            "day": "1",
+            "teacher": "郑儒东",
+            "course": "工科数学分析(1)",
+            "courseDescription": "7.5 常系数线性微分方程",
+            "section": "01,02",
+            "address": "教1-310"
+        },
+        {
+            "day": "2",
+            "teacher": "郑儒东",
+            "course": "工科数学分析(1)",
+            "courseDescription": "7.6 线性微分方程组",
+            "section": "01,02",
+            "address": "教1-316"
+        },
+        {
+            "day": "3",
+            "teacher": "黄益",
+            "course": "体育(1)",
+            "courseDescription": "1、技术考核（机动）；2、身体素质练习；教学比赛。通过篮球运动集体项目的竞赛、培养学生的规则意识，上升到遵纪守法的意识培养。",
+            "section": "03,04",
+            "address": ""
+        },
+        {
+            "day": "3",
+            "teacher": "郑儒东",
+            "course": "工科数学分析(1)",
+            "courseDescription": "7.7 例题",
+            "section": "06,07",
+            "address": "教1-316"
+        },
+        {
+            "day": "4",
+            "teacher": "彭勇穗",
+            "course": "大学英语(1)",
+            "courseDescription": "综合教程U6",
+            "section": "03,04",
+            "address": "教1-333"
+        },
+        {
+            "day": "5",
+            "teacher": "郑儒东",
+            "course": "工科数学分析(1)",
+            "courseDescription": "总复习",
+            "section": "03,04",
+            "address": "教1-316"
+        }
+    ]
+}

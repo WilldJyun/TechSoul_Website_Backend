@@ -1,0 +1,100 @@
+{
+    "items": [
+        {
+            "day": "1",
+            "teacher": "彭勇穗",
+            "course": "大学英语(1)",
+            "courseDescription": "视听说U2",
+            "section": "08,09",
+            "address": "教1-514B"
+        },
+        {
+            "day": "1",
+            "teacher": "袁慧芳",
+            "course": "中国近现代史纲要",
+            "courseDescription": "第四章（第六专题：中国人民有了主心骨）：中国共产党成立和中国革命新局面。  伟大的建党精神。",
+            "section": "06,07",
+            "address": "教3-201"
+        },
+        {
+            "day": "1",
+            "teacher": "郑儒东",
+            "course": "工科数学分析(1)",
+            "courseDescription": "3.3 其他求导法则",
+            "section": "01,02",
+            "address": "教1-310"
+        },
+        {
+            "day": "2",
+            "teacher": "郑儒东",
+            "course": "工科数学分析(1)",
+            "courseDescription": "3.4 高阶导数",
+            "section": "01,02",
+            "address": "教1-316"
+        },
+        {
+            "day": "3",
+            "teacher": "黄益",
+            "course": "体育(1)",
+            "courseDescription": "1、复习移动技术（滑步、跑、跳）；2学习行进间运球投篮技术；3、教学比赛，发展身体素质；",
+            "section": "03,04",
+            "address": ""
+        },
+        {
+            "day": "3",
+            "teacher": "杨淑伶",
+            "course": "线性代数",
+            "courseDescription": "2.6 矩阵的秩 【思政元素融入点】 　　让学生清楚矩阵进行初等变换，秩不变，这就是所谓&ldquo;形变质不变&rdquo;的辩证思想。根据方程组系数矩阵和增广矩阵的秩来判断方程组是否有解，是根据它们的&ldquo;量&rdquo;来确定它们对应的&ldquo;质&rdquo;。在线性代数的学习中，要善于运用量变与质变的辩证关系。",
+            "section": "08,09",
+            "address": "教3-210"
+        },
+        {
+            "day": "3",
+            "teacher": "郑儒东",
+            "course": "工科数学分析(1)",
+            "courseDescription": "3.5 微分",
+            "section": "06,07",
+            "address": "教1-316"
+        },
+        {
+            "day": "4",
+            "teacher": "彭勇穗",
+            "course": "大学英语(1)",
+            "courseDescription": "综合教程U3",
+            "section": "03,04",
+            "address": "教1-333"
+        },
+        {
+            "day": "4",
+            "teacher": "徐喆",
+            "course": "军事理论",
+            "courseDescription": "",
+            "section": "06,07",
+            "address": "3号大教室"
+        },
+        {
+            "day": "5",
+            "teacher": "卢永毅",
+            "course": "专业导论",
+            "courseDescription": "生物医学信息处理与应用1",
+            "section": "06,07",
+            "address": "教2-208"
+        },
+        {
+            "day": "5",
+            "teacher": "湛珏颖",
+            "course": "大学生职业规划与创业教育",
+            "courseDescription": "怀揣创业之梦。使学生了解创业的基本知识，培养学生创业意识与创业精神，提高创业素质与能力。",
+            "section": "03,04",
+            "address": "教4-206"
+        },
+        {
+            "day": "5",
+            "teacher": "杨淑伶",
+            "course": "线性代数",
+            "courseDescription": "习题课",
+            "section": "01,02",
+            "address": "教3-210"
+        }
+    ]
+}

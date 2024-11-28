@@ -1,0 +1,4 @@
+flask
+flask-restful
+flask-cors
+flask-sqlalchemy
