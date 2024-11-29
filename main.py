@@ -4,6 +4,8 @@ from flask_cors import CORS
 import os
 import json
 import time
+import pymysql #导入 pymysql
+from Global_Vars import *
 
 app = Flask (__name__)
 api = Api(app)
@@ -100,6 +102,7 @@ class Notice(Resource):
         else:
             return {'错误': '需要params参数，里面封装noticeData参数'}, 400
 
+
     def ModifyContent(self):
         pass
     def DeleteContent(self):
@@ -108,18 +111,52 @@ class Notice(Resource):
     def SaveLogToDB(self):
         pass
         
+api.add_resource(Notice, '/api/notice') # 监听路由
 
+def Database_Operate(): 
+        
+
+
+    #打开数据库连接
+    db= pymysql.connect(db="TenX",host="localhost",user=Global_Username,password=Global_Password,port=Global_ConnectionPort)
+
+    # 使用cursor()方法获取操作游标
+    cur = db.cursor()
+
+    #1.查询操作
+    # 编写sql 查询语句  user 对应我的表名
+    sql = "select * from Notifications"
     
-    
-    
+    notices = [] # 最终的消息列表
+    try:
+        cur.execute(sql) 	#执行sql语句
+
+        results = cur.fetchall()	#获取查询的所有记录
+        #遍历结果
+        for row in results :
+            notices.append({
+                "id": row[6],
+                "title": row[1],
+                "type": row[2],
+                "sender": row[3],
+                "content": row[4],
+                "valid": str(row[5]),
+            })
+    except Exception as e:
+        raise e
+    finally:
+        db.close()	#关闭连接
+    return notices
 
         
 class Test(Resource):
 
     def get(self):
-        return "test"
+        a = Database_Operate()
+        return a
 
-api.add_resource(Notice, '/api/notice')
+api.add_resource(Test, '/api/Test') # 监听路由
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0",port=5000)
+    a = Database_Operate()
