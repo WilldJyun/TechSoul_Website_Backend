@@ -113,47 +113,152 @@ class Notice(Resource):
         
 api.add_resource(Notice, '/api/notice') # 监听路由
 
-def Database_Operate(): 
+
+class DatabaseOperate():
+
+    db : pymysql.connect
+
+    def __init__(self) -> None:
+        DatabaseOperate.db= pymysql.connect(db="TenX",host="localhost",user=Global_Username,password=Global_Password,port=Global_ConnectionPort)
+    def Select_Database(self,Type:str) -> list: 
+        """
+        连接到数据库，并进行查询操作
+
+        returns:
+            list：所有消息
+
+        """
+        # 使用cursor()方法获取操作游标
+        cur = DatabaseOperate.db.cursor()
+
+        #1.查询操作
+        # 编写sql 查询语句 对应 表名Notifications
+        sql = "select * from Notifications"
         
+        notices = [] # 最终的消息列表
+        try:
+            cur.execute(sql) 	#执行sql语句
+
+            results = cur.fetchall()	#获取查询的所有记录
+            #遍历结果
+            for row in results :
+                notices.append({
+                    "UID": row[6],
+                    "title": row[1],
+                    "type": row[2],
+                    "sender": row[3],
+                    "content": row[4],
+                    "valid": str(row[5]),
+                })
+        except Exception as e:
+            raise e
+        finally:
+            DatabaseOperate.db.close()	#关闭连接
+        return notices
+
+    def Insert_Database(self,TableName:str,Content:dict) -> bool:
+        """
+        连接到数据库，并进行插入操作
+        插入格式为
+
+        returns:
+            bool：插入成功返回True，插入失败抛出异常
+
+        """
+        try:
+
+            # 使用cursor()方法获取操作游标
+            cur = DatabaseOperate.db.cursor()
+
+            # 2.插入操作
+            # 编写sql 查询语句 对应 表名Notifications
+            sql = "INSERT INTO Notifications (title,type,sender,content,valid,UID) VALUES ('%s','%s','%s','%s','%s','%s')" % (Content["title"],Content["type"],Content["sender"],Content["content"],Content["valid"],Content["UID"])
+
+            cur.execute(sql) 	#执行sql语句
+            DatabaseOperate.db.commit()
+            DatabaseOperate.db.close() # 关闭连接
+            return True
+        except Exception as e:
+            DatabaseOperate.db.rollback()
+            DatabaseOperate.db.close()
+            raise e
 
 
-    #打开数据库连接
-    db= pymysql.connect(db="TenX",host="localhost",user=Global_Username,password=Global_Password,port=Global_ConnectionPort)
 
-    # 使用cursor()方法获取操作游标
-    cur = db.cursor()
+    def Update_Database(self,TableName:str,Condition:str,UpdateDice:dict) -> bool:
+        """
+        连接到数据库，并进行更新操作
+        params:
+            TableName: Str 表名
+            Condition: Str 更新条件
+            UpdateDice: Dict 更新内容
 
-    #1.查询操作
-    # 编写sql 查询语句  user 对应我的表名
-    sql = "select * from Notifications"
-    
-    notices = [] # 最终的消息列表
-    try:
-        cur.execute(sql) 	#执行sql语句
+        examples：
+            Update_Database("Notifications","id = 1",{"title":"test","type":"test","sender":"test","content":"test","valid":"test"})
 
-        results = cur.fetchall()	#获取查询的所有记录
-        #遍历结果
-        for row in results :
-            notices.append({
-                "id": row[6],
-                "title": row[1],
-                "type": row[2],
-                "sender": row[3],
-                "content": row[4],
-                "valid": str(row[5]),
-            })
-    except Exception as e:
-        raise e
-    finally:
-        db.close()	#关闭连接
-    return notices
+        returns:
+            bool：更新成功返回True，更新失败抛出异常
 
+        """
+        try:
+
+            cur = DatabaseOperate.db.cursor() # 来个游标
+
+            update_str = ', '.join([f'{key} = "{value}"' for key, value in UpdateDice.items()]) # 构造更新内容
+
+            sql = f"UPDATE {TableName} SET {update_str} WHERE {Condition}" # 构建sql语句
+
+            cur.execute(sql) 	#执行sql语句
+            DatabaseOperate.db.commit() # 提交
+            DatabaseOperate.db.close() # 关闭连接
+            return True
+        except Exception as e:
+            # 回滚
+            DatabaseOperate.db.rollback()
+
+            # 关闭连接
+            DatabaseOperate.db.close()
+
+            raise e
+
+    def Delete_Database(self,TableName:str,Condition:str):
+        """
+        连接到数据库，并进行删除操作
+
+        params:
+            TableName: Str 表名
+            Condition: Str 删除条件
+
+        returns:
+            list：所有消息
+
+        """
+        try:
+
+            # 使用cursor()方法获取操作游标
+            cur = DatabaseOperate.db.cursor()
+
+            # 3.删除操作
+            # 编写sql 查询语句 对应 表名Notifications
+            sql = f"DELETE FROM {TableName} WHERE {Condition}" 
+
+            cur.execute(sql) 	#执行sql语句
+            DatabaseOperate.db.commit()
+            DatabaseOperate.db.close() # 关闭连接
+            return True
+        except Exception as e:
+
+            DatabaseOperate.db.rollback() # 回滚
+
+            DatabaseOperate.db.close() # 关闭连接
+
+            raise e
         
 class Test(Resource):
 
     def get(self):
-        a = Database_Operate()
-        return a
+        a = DatabaseOperate()
+        return a.Insert_Database("Notifications",{"title":"titletest","type":"typetest","sender":"sendertest","content":"contenttest","valid":"validtest","UID":"uidtest"})
 
 api.add_resource(Test, '/api/Test') # 监听路由
 
