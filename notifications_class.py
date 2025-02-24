@@ -1,7 +1,7 @@
 from flask import Flask,request
 from flask_restful import Resource, Api
-from database_operate_module import DatabaseOperate
-from global_vars import *
+from database_operate_module import TenX_DatabaseOperate
+from Global_Vars import *
 import json
 import time
 
@@ -26,7 +26,7 @@ class NotificationsClass(Resource):
         if type == "all":
 
             if page == "0":
-                counts = DatabaseOperate.Select_Database(Global_Table_Notifications,f"ORDER BY id DESC LIMIT {Global_ShowPages};",Count = True)
+                counts = TenX_DatabaseOperate.Select_Database(Global_Table_Notifications,f"ORDER BY id DESC LIMIT {Global_ShowPages};",Count = True)
             
                 result = {
                     "counts": counts, # 总条数
@@ -39,14 +39,14 @@ class NotificationsClass(Resource):
                 except: 
                     return {'result': 'failed','message': 'Page parameter is invalid,provide a integer'}, 400
                 
-                return DatabaseOperate.Select_Database(Global_Table_Notifications,f"ORDER BY id DESC LIMIT {Global_ShowPages} OFFSET {ThePage};")
+                return TenX_DatabaseOperate.Select_Database(Global_Table_Notifications,f"ORDER BY id DESC LIMIT {Global_ShowPages} OFFSET {ThePage};")
 
         if type == "valid":
 
             current_time = time.strftime("%Y%m%d") # 取现行时间
 
             if page == "0":
-                counts = DatabaseOperate.Select_Database(Global_Table_Notifications,f"WHERE valid >= {current_time} ",Count = True) # 查询符合条件的通知总数
+                counts = TenX_DatabaseOperate.Select_Database(Global_Table_Notifications,f"WHERE valid >= {current_time} ",Count = True) # 查询符合条件的通知总数
             
                 result = {
                     "counts": counts, # 总条数
@@ -61,7 +61,7 @@ class NotificationsClass(Resource):
                     return {'result': 'failed','message': 'Page parameter is invalid,provide a integer'}, 400
                 
 
-                return DatabaseOperate.Select_Database(Global_Table_Notifications,f"WHERE valid >= {current_time} ORDER BY id DESC LIMIT {Global_ShowPages} OFFSET {ThePage};")
+                return TenX_DatabaseOperate.Select_Database(Global_Table_Notifications,f"WHERE valid >= {current_time} ORDER BY id DESC LIMIT {Global_ShowPages} OFFSET {ThePage};")
             
         return {'result': 'failed','message': 'Invalid Requests.'}, 400
 
@@ -140,8 +140,8 @@ class NotificationsClass(Resource):
         if token == Global_Temp_Token:
             
             current_time = time.strftime("%Y%m%d")
-            DatabaseOperate.hang_on = True # 延缓下一次关闭数据库，防止被关闭无法操作
-            Latest = DatabaseOperate.Select_Database(Global_Table_Notifications,"ORDER BY id DESC LIMIT 1;") # 最新的通知
+            TenX_DatabaseOperate.hang_on = True # 延缓下一次关闭数据库，防止被关闭无法操作
+            Latest = TenX_DatabaseOperate.Select_Database(Global_Table_Notifications,"ORDER BY id DESC LIMIT 1;") # 最新的通知
             print(Latest)
             if "uid" in Latest[0]: # 如果最新的uid存在的话
                 uid = Latest[0]["uid"] # 获取最新的uid
@@ -154,7 +154,7 @@ class NotificationsClass(Resource):
             else: # 如果没有任何通知，就让uid为当天的第一个通知
                 uid = f"{current_time}1"
 
-            DatabaseOperate.Insert_Database(Global_Table_Notifications,{
+            TenX_DatabaseOperate.Insert_Database(Global_Table_Notifications,{
                 "title":title,
                 "type":type,
                 "sender":sender,
@@ -193,7 +193,7 @@ class NotificationsClass(Resource):
             }
 
             if token == Global_Temp_Token:
-                result = DatabaseOperate.Update_Database(Global_Table_Notifications,f"uid = {uid}", send)
+                result = TenX_DatabaseOperate.Update_Database(Global_Table_Notifications,f"uid = {uid}", send)
                 return result
         except:
             return {'result': 'failed','message': '缺失必要的项 make sure you have uid,token,title,type,sender,content,valid'}, 400
@@ -205,7 +205,7 @@ class NotificationsClass(Resource):
             uid = DeleteData["uid"]
 
             if token == Global_Temp_Token:
-                result = DatabaseOperate.Delete_Database(Global_Table_Notifications,f"uid = {uid}")
+                result = TenX_DatabaseOperate.Delete_Database(Global_Table_Notifications,f"uid = {uid}")
                 return result
         except:
             return {'result': 'failed','message': '缺失必要的项 make sure you have uid'}, 400

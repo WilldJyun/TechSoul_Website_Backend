@@ -1,35 +1,92 @@
 import pymysql
-from global_vars import *
+from Global_Vars import *
 
-class DatabaseOperate():
+class GPA_DatabaseOperate():
+    db : pymysql.connect
+    hang_on : bool = False # 延缓下一次关闭数据库，防止被关闭无法操作
+    
+    @staticmethod
+    def initialise() -> None:
+        GPA_DatabaseOperate.db = pymysql.connect(
+            database = "TenX",
+            host = "localhost",
+            user = Global_Username,
+            password = Global_Password,
+            port = Global_ConnectionPort,
+        )
+
+    @staticmethod
+    # 查询操作
+    def CheckPassword(StudentID: str,Validate_Password : str):
+        """
+        连接到TenX下GPA这个表格，查询StudentID对应项，返回其Password，
+        如果和给定的Validate_Password相同，则返回True，否则返回False
+        
+        StudentID: str 属性
+        Validate_Password: str 密码，检验是否一致
+            （Condition是查询条件）
+
+        如果错误，返回 False
+        如果正确，返回一个字典{}，'name'是名字，'GPA'是GPA，'rank'是排名
+        """
+        if not StudentID.isdigit():
+            print("ID不是数字")
+            return False # ID不是数字，防止注入
+
+        GPA_DatabaseOperate.initialise()
+        cursor = GPA_DatabaseOperate.db.cursor()
+        try:
+            cursor.execute(f"SELECT * FROM GPA WHERE StudentID = %s",(StudentID,))
+            results = cursor.fetchall()
+            if results == []: # 如果查询结果为空，则返回False
+                return False
+            
+            if results[0][2] == Validate_Password: # 如果密码一致，则返回True
+                return {'name':results[0][0],'GPA':results[0][4],'rank':results[0][3]}
+            
+            return False # 不正确或输入为空
+
+        except Exception as e:
+            print(e)
+
+class TenX_DatabaseOperate():
 
     db : pymysql.connect
     hang_on : bool = False # 延缓下一次关闭数据库，防止被关闭无法操作
 
     @staticmethod
     def initialise() -> None:
-        DatabaseOperate.db= pymysql.connect(db="TenX",host="localhost",user=Global_Username,password=Global_Password,port=Global_ConnectionPort)
+        TenX_DatabaseOperate.db= pymysql.connect(
+            database = "TenX",
+            host = "localhost",
+            user = Global_Username,
+            password = Global_Password,
+            port = Global_ConnectionPort
+        )
 
     @staticmethod
     # 查询操作
     def Select_Database(TableName : str,Attribute : str = "",Count :bool = False) -> list: 
         """
         连接到数据库，并进行查询操作
-        params:
+
+        :params:
             TableName: Str 表名
+
             Attribute: Str 属性
+
             （Attribute是FROM {TableName} 后的sql命令，、
             自己根据需要加sql语句。）
 
             Count: bool 是否返回计数
             如果Count为True，返回一个int值，表示查询到的结果数量。
-        returns:
+        :returns:
             list：消息
 
         """
-        DatabaseOperate.initialise()
+        TenX_DatabaseOperate.initialise()
         # 使用cursor()方法获取操作游标
-        cur = DatabaseOperate.db.cursor()
+        cur = TenX_DatabaseOperate.db.cursor()
 
         if Count == True:
             sql = f"SELECT COUNT(*) FROM {TableName} {Attribute}"
@@ -62,10 +119,10 @@ class DatabaseOperate():
             except Exception as e:
                 raise e
             finally:
-                if DatabaseOperate.hang_on == True:
-                    DatabaseOperate.hang_on = False
+                if TenX_DatabaseOperate.hang_on == True:
+                    TenX_DatabaseOperate.hang_on = False
                 else:
-                    DatabaseOperate.db.close()	#关闭连接
+                    TenX_DatabaseOperate.db.close()	#关闭连接
             return notices
     
     @staticmethod
@@ -79,11 +136,11 @@ class DatabaseOperate():
             bool：插入成功返回True，插入失败抛出异常
 
         """
-        DatabaseOperate.initialise()
+        TenX_DatabaseOperate.initialise()
         try:
 
             # 使用cursor()方法获取操作游标
-            cur = DatabaseOperate.db.cursor()
+            cur = TenX_DatabaseOperate.db.cursor()
 
             # 2.插入操作
             # 编写sql 查询语句 对应 表名Notifications
@@ -93,7 +150,7 @@ class DatabaseOperate():
             values = (content["title"], content["type"], content["sender"], content["content"], content["valid"], content["uid"])
 
             cur.execute(sql, values)  # 执行sql语句
-            DatabaseOperate.db.commit()
+            TenX_DatabaseOperate.db.commit()
             
             turnback = {
                 "result": "success",
@@ -102,13 +159,13 @@ class DatabaseOperate():
 
             return turnback
         except Exception as e:
-            DatabaseOperate.db.rollback()
+            TenX_DatabaseOperate.db.rollback()
             raise e
         finally:
-            if DatabaseOperate.hang_on == True:
-                DatabaseOperate.hang_on = False
+            if TenX_DatabaseOperate.hang_on == True:
+                TenX_DatabaseOperate.hang_on = False
             else:
-                DatabaseOperate.db.close()
+                TenX_DatabaseOperate.db.close()
 
 
 
@@ -128,9 +185,9 @@ class DatabaseOperate():
             dict (按照readme规范)
 
         """
-        DatabaseOperate.initialise()
+        TenX_DatabaseOperate.initialise()
         try:
-            cur = DatabaseOperate.db.cursor()  # 获取游标
+            cur = TenX_DatabaseOperate.db.cursor()  # 获取游标
 
             # 构造更新内容
             update_items = [f"{key} = %s" for key in UpdateDict.keys()]
@@ -144,17 +201,17 @@ class DatabaseOperate():
 
             # 执行 SQL 语句
             cur.execute(sql, params)
-            DatabaseOperate.db.commit()  # 提交
+            TenX_DatabaseOperate.db.commit()  # 提交
 
         except Exception as e:
             # 回滚
-            DatabaseOperate.db.rollback()
+            TenX_DatabaseOperate.db.rollback()
             raise e
         finally:
-            if DatabaseOperate.hang_on == True:
-                DatabaseOperate.hang_on = False
+            if TenX_DatabaseOperate.hang_on == True:
+                TenX_DatabaseOperate.hang_on = False
             else:
-                DatabaseOperate.db.close()
+                TenX_DatabaseOperate.db.close()
 
         turnback = {
                 "result": "success",
@@ -174,28 +231,28 @@ class DatabaseOperate():
             list：所有消息
 
         """
-        DatabaseOperate.initialise()
+        TenX_DatabaseOperate.initialise()
         try:
 
             # 使用cursor()方法获取操作游标
-            cur = DatabaseOperate.db.cursor()
+            cur = TenX_DatabaseOperate.db.cursor()
 
             # 3.删除操作
             # 编写sql 查询语句 对应 表名Notifications
             sql = f"DELETE FROM {TableName} WHERE {Condition}" 
 
             cur.execute(sql) 	#执行sql语句
-            DatabaseOperate.db.commit()
+            TenX_DatabaseOperate.db.commit()
 
         except Exception as e:
 
-            DatabaseOperate.db.rollback() # 回滚
+            TenX_DatabaseOperate.db.rollback() # 回滚
             raise e
         finally:
-            if DatabaseOperate.hang_on == True:
-                DatabaseOperate.hang_on = False
+            if TenX_DatabaseOperate.hang_on == True:
+                TenX_DatabaseOperate.hang_on = False
             else:
-                DatabaseOperate.db.close()
+                TenX_DatabaseOperate.db.close()
 
         turnback = {
                 "result": "success",

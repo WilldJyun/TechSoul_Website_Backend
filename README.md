@@ -27,7 +27,7 @@
 访问。
 
 
-### 获取课表
+# 1、获取课表的API
 > GET tengchuang.top/api/schedule?week=1 
 
 改变其中的 week 值 获得不同周的课表。
@@ -48,7 +48,7 @@
 
 （在数据库存储时，每一个数据会获得自己的排序id（自增），与UID不同，用于快速取出前x项。最新保存的项会获得最大的排序id。第一个存入的，排序id为1，第二个存入的为2，第1000个存入的为1000，以此类推）
 
-### 获取通知列表
+# 2、 获取通知列表API
 
 参数：
 > type : 类型（valid或为all）   
@@ -103,24 +103,23 @@
 ### 2 当 page 值 为 0 时，返回所有通知的**条数**与每页显示的**条数**，无论是否过期。
 > GET tengchuang.top/api/notice?type=all&page=0
 
-# 添加通知
+# 3、通知 操作
+## 3.1 添加通知
 > POST tengchuang.top/api/notice
 
 POST发送的json格式：  
 （注意大小写）
 ~~~json
 {
-  "params": {
     "operate": "add",
-    "notice_data": {
-      "token": "口令，如果正确才能添加通知",
-      "title": "通知标题",
-      "type": "通知类型（作业等）",
-      "sender": "发送者",
-      "content": "通知内容",
-      "valid": "在此日期前有效（含当日）"
+    "params": {
+        "token": "口令，如果正确才能添加通知",
+        "title": "通知标题",
+        "type": "通知类型（作业等）",
+        "sender": "发送者",
+        "content": "通知内容",
+        "valid": "在此日期前有效（含当日）"
     }
-  }
 }
 ~~~
 在 NoticeData 中 输入 Token、Title、Type、Sender、Content、Valid，令Operate = "add"，并用 params 包起来，通过 JSON 格式发送。
@@ -137,7 +136,7 @@ POST发送的json格式：
 }
 ~~~
 
-### 更改已有通知
+## 3.2 更改已有通知
 > POST tengchuang.top/api/notice
 
 在前端的更改页面，应该先获取通知的UID、发送者、标题什么的，   
@@ -150,17 +149,15 @@ POST发送的json格式：
 POST发送的json格式：
 ~~~json
 {
-  "params": {
     "operate": "update",
-    "update_data": {
-      "token": "口令，如果正确才能添加通知",
-      "title": "通知标题",
-      "type": "通知类型（作业等）",
-      "sender": "发送者",
-      "content": "通知内容",
-      "valid": "在此日期前有效（含当日）"
+    "params": {
+        "token": "口令，如果正确才能添加通知",
+        "title": "通知标题",
+        "type": "通知类型（作业等）",
+        "sender": "发送者",
+        "content": "通知内容",
+        "valid": "在此日期前有效（含当日）"
     }
-  }
 }
 
 ~~~
@@ -178,21 +175,20 @@ POST发送的json格式：
 }
 ~~~
 
-### 删除通知
+## 3.3 删除通知
 > POST tengchuang.top/api/notice
+
 （注意大小写）
+
 POST发送的json格式：
 ~~~json
 {
+    "operate": "add",
     "params": {
-        "operate": "delete",
-        "delete_data": {
-            "uid": "通知的UID",
-            "token": "口令，如果正确才能删除通知",
-        },
+        "token": "口令，如果正确才能删除通知",
+        "uid": "通知的UID",
     }
 }
- 在 DeleteData 中 输入 要删除的UID，以及对应的Token，令Operate = "delete"，并用 params 包起来，通过 JSON 格式发送。
 ~~~
 开发环境中token为123456，正式环境待定。
 
@@ -202,5 +198,39 @@ POST发送的json格式：
 {
   "result": "success/failed",
   "message": "成功/失败原因"
+}
+~~~
+
+# 4、GPA查询功能（部分涉隐私）
+> POST tengchuang.top/api/gpa
+
+（注意大小写）
+
+POST发送的json格式：
+~~~json
+{
+    "operate": "GPA",
+    "params": {
+        "studentID": "学号",
+        "password": "密码",
+    }
+}
+~~~
+
+返回格式例：
+
+失败（会有具体原因）：
+~~~json
+{'status':'error','message':'Wrong Password or StudentID'}
+~~~
+
+成功：
+~~~json
+{
+  'name':'姓名',
+  'studentID':'学号',
+  'GPA':'综合绩点情况',
+  'rank':'排名情况',
+  'time':'查询时间，内容是 %Y-%m-%d %H:%M:%S'
 }
 ~~~

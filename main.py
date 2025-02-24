@@ -4,8 +4,9 @@ from flask_cors import CORS
 import os
 import time
 from notifications_class import NotificationsClass
-from global_vars import *
+from Global_Vars import *
 from database_operate_module import *
+from GPA_class import GPA_class
 
 app = Flask (__name__)
 api = Api(app)
@@ -39,16 +40,15 @@ class Schedule(Resource):
 api.add_resource(Schedule, '/api/schedule')
 
 # 处理Notice返回逻辑
-
-
-        
 api.add_resource(NotificationsClass, '/api/notice') # 监听路由
 
-        
+# 处理GPA返回逻辑（隐私）
+api.add_resource(GPA_class, '/api/gpa') # 监听路由
+
 class Test(Resource):
 
     def get(self):
-        a = DatabaseOperate()
+        a = TenX_DatabaseOperate()
         return a.Select_Database("Notifications","")
 
 api.add_resource(Test, '/api/Test') # 监听路由
