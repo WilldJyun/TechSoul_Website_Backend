@@ -45,5 +45,5 @@ class GPA_class(Resource):
                 
                 except Exception as e:
                     print(e)
-                    return {'result':'failed','message':'Invalid input. 输入格式可能不正确'},500
+                    return {'result':'failed','message':'Invalid input. 输入格式可能不正确'},400
             
