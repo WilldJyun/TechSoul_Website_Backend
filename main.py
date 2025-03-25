@@ -7,6 +7,7 @@ from notifications_class import NotificationsClass
 from Global_Vars import *
 from database_operate_module import *
 from GPA_class import GPA_class
+from Alzheimer_class import Alzheimer_class
 
 app = Flask (__name__)
 api = Api(app)
@@ -15,13 +16,13 @@ api = Api(app)
 CORS(app, resources={r"/*": {"origins": "*", "headers": ["Origin", "X-Requested-With", "Content-Type", "token", "Accept"]}})
 # 处理课表返回逻辑
 
+
 class Schedule(Resource):
 
     week : str # 周数
 
     def get(self):
         
-
         week = request.args.get('week')
 
         if week:
@@ -44,6 +45,9 @@ api.add_resource(NotificationsClass, '/api/notice') # 监听路由
 
 # 处理GPA返回逻辑（隐私）
 api.add_resource(GPA_class, '/api/gpa') # 监听路由
+
+# 处理 阿尔兹海默症相关 返回逻辑
+api.add_resource(Alzheimer_class, '/api/ad')
 
 class Test(Resource):
 
