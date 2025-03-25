@@ -2,7 +2,7 @@ from flask import request
 from flask_restful import Resource
 from Global_Vars import *
 import random
-
+from alzheimer_infer.infer_with_possibility import predict
 
 content = """她 62 岁了，女性，没怎么上过学。
 身高 150 厘米，体重 55 公斤。她从不抽烟喝酒。
@@ -76,6 +76,11 @@ class Alzheimer_class(Resource):
             for key in required_keys:
                 if key not in operate_data:
                     return {'result':'failed','message':f'{key} not in operate_data'},400
-            
+                
             # 下面是输入模型的逻辑
+            try:
+                return predict(operate_data),200
+            except Exception as e:
+                return {'result':'failed','message':str(e)},400
+            
     
