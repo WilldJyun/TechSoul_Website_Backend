@@ -69,4 +69,4 @@ def predict(input_data):
 
     # 返回最终合并的预测值
     ans = predictions["Voting"]*100
-    return f"{int(ans)}%"
+    return int(ans)

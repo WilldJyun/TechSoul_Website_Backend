@@ -45,11 +45,10 @@ class Alzheimer_class(Resource):
             required_keys = [ # 检查是否包含所有必要的键！！重要，在此修改
                 "Age",
                 "Gender",
-                "Ethnicity",
                 "EducationLevel",
                 "BMI",
                 "Smoking",
-                "AlcoholConsumption",
+                "AlcoholConsumption", # 从0~20个酒精单位
                 "PhysicalActivity",
                 "DietQuality",
                 "SleepQuality",
@@ -65,6 +64,7 @@ class Alzheimer_class(Resource):
                 if key not in operate_data:
                     return {'result':'failed','message':f'{key} not in operate_data'},400
                 
+            operate_data.update({"Ethnicity":2}) # 为亚洲人设计，默认为 2
 
             condition = False # 是否建议立刻就医
             risk = {} # 风险项目
@@ -122,10 +122,14 @@ class Alzheimer_class(Resource):
                 index += 1
                 risk.update({str(index):"您有过头部受伤历史，若严重不适，请寻找医师获得专业指导"})
             
-
             # 下面是输入预测模型的逻辑
             try:
+                possibility : int  # 风险值 
                 possibility = predict(operate_data)
+
+                if possibility >= 60 :
+                    condition = True # 风险过高
+
                 messsage = {
                     "possibility":possibility,
                     "condition": condition,
