@@ -1,21 +1,89 @@
-import json
+risk = {}
+index = 0
+condition = False
+operate_data = {
+    "BMI":24.4,
+    'SystolicBP':138,
+    'DiastolicBP':25,
+    'AlcoholConsumption':10,
+    "PhysicalActivity":9,
+    "DietQuality":8,
+    "SleepQuality":7,
+    "FamilyHistoryAlzheimers":1,
+    "CardiovascularDisease":1,
+    "Diabetes":1,
+    "Depression":1,
+    "HeadInjury":1,
+    "Hypertension":1,
+    "SystolicBP":1,
+}
 
-# 假设你已经得到了以下 JSON 字符串
-json_str1 = '{"Age": "63", "Gender": "1", "EducationLevel": "1", "Height": "155", "Weight": "60", "BMI": ""}'
-json_str2 = '{"Smoking": "0", "AlcoholConsumption": "1", "FamilyHistoryAlzheimers": "1", "CardiovascularDisease": "0", "Diabetes": "0", "Depression": "0", "HeadInjury": "0", "Hypertension": "1"}'
-json_str3 = '{"PhysicalActivity": "2", "DietQuality": "5", "SleepQuality": "3"}'
-json_str4 = '{"SystolicBP": "130", "DiastolicBP": "85", "CholesterolTotal": "5.8", "CholesterolLDL": "3.2", "CholesterolHDL": "", "CholesterolTriglycerides": "", "MMSE": "24", "ADL": "85", "FunctionalAssessment": "4"}'
-json_str5 = '{"MemoryComplaints": "1", "BehavioralProblems": "0", "Confusion": "1", "Disorientation": "1", "PersonalityChanges": "1", "DifficultyCompletingTasks": "0", "Forgetfulness": "1"}'
+condition = False # 是否建议立刻就医
+risk = {} # 风险项目
+index = 0 # 风险序号
 
-# 解析 JSON 字符串
-json_obj1 = json.loads(json_str1)
-json_obj2 = json.loads(json_str2)
-json_obj3 = json.loads(json_str3)
-json_obj4 = json.loads(json_str4)
-json_obj5 = json.loads(json_str5)
+if float(operate_data['BMI']) > 23.9 : 
+    index += 1
+    risk.update({index:f"BMI偏高（{operate_data['BMI']}），您的体重过高，建议控制体重"})
 
-# 合并所有字典
-merged_json_obj = {**json_obj1, **json_obj2, **json_obj3, **json_obj4, **json_obj5}
+if float(operate_data['BMI']) < 18.5 : 
+    index += 1
+    risk.update({index:f"BMI偏低（{operate_data['BMI']}），您的体重过低，建议注意饮食"})
 
-# 打印合并后的 JSON 对象
-print(json.dumps(merged_json_obj, ensure_ascii=False, indent=4))
+if "SystolicBP" in operate_data and "DiastolicBP" in operate_data:
+    if float(operate_data['SystolicBP']) > 130 or float(operate_data['DiastolicBP']) > 80 : 
+        index += 1
+        risk.update({index:f"您的血压过高（收缩压{operate_data['SystolicBP']} / 舒张压{operate_data['DiastolicBP']}）"})
+        condition = True
+else:
+    if int(operate_data["Hypertension"]) == 1:
+        index += 1
+        risk.update({index:f"您患有高血压，请寻找医师获得专业指导"})
+        condition = True
+
+if float(operate_data['AlcoholConsumption']) > 10 : 
+    index += 1
+    risk.update({index:"您饮酒过量，少喝酒有益健康"})
+
+if float(operate_data['DietQuality']) < 6 : 
+    index += 1
+    risk.update({index:"您的饮食质量较差，请寻找医师获得专业指导"})
+    condition = True
+
+if float(operate_data['SleepQuality']) < 6 : 
+    index += 1
+    risk.update({index:"您的饮食质量较差，请寻找医师获得专业指导"})
+    condition = True
+
+if int(operate_data["CardiovascularDisease"]) == 1 :
+    index += 1
+    risk.update({index:"您有心血管疾病，请寻找医师获得专业指导"})
+    condition = True
+
+if int(operate_data["Diabetes"]) == 1 :
+    index += 1
+    risk.update({index:"您患有糖尿病，请寻找医师获得专业指导"})
+    condition = True
+
+if int(operate_data["Depression"]) == 1 :
+    index += 1
+    risk.update({index:"您患有抑郁症，请寻找医师获得专业指导"})
+    condition = True
+
+if int(operate_data["HeadInjury"]) == 1 :
+    index += 1
+    risk.update({index:"您有过头部受伤历史，若严重不适，请寻找医师获得专业指导"})
+
+
+# 下面是输入预测模型的逻辑
+try:
+    possibility = "cnm"
+    messsage = {
+        "possibility":possibility,
+        "condition": condition,
+        "risks": risk,
+    }
+    print ({'result':'success','message':messsage},200)
+except Exception as e:
+    print ({'result':'failed','message':str(e)},400)
+

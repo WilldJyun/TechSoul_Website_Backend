@@ -4,11 +4,11 @@ import xgboost as xgb
 from catboost import CatBoostClassifier
 
 # Load the saved medians (assuming this was saved during training)
-with open('medians.pkl', 'rb') as f:
+with open('alzheimer_infer/medians.pkl', 'rb') as f:
     medians = pickle.load(f)
 
 # Load the feature names saved during training
-with open('feature_names.pkl', 'rb') as f:
+with open('alzheimer_infer/feature_names.pkl', 'rb') as f:
     feature_names = pickle.load(f)
 
 # Load all models

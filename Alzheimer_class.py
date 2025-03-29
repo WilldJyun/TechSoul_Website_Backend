@@ -1,7 +1,7 @@
 from flask import request
 from flask_restful import Resource
 from Global_Vars import *
-import random
+# import random
 from alzheimer_infer.infer_with_possibility import predict
 
 content = """她 62 岁了，女性，没怎么上过学。
@@ -17,17 +17,11 @@ content = """她 62 岁了，女性，没怎么上过学。
 class Alzheimer_class(Resource):
 
     def get(self):
-        API_providers = [
-            {"url":"https://dashscope.aliyuncs.com/compatible-mode/v1/chat/completions",
-             "api_key":"sk-9b72afeb2acb444384c368b88c412a4f",
-             "model":"deepseek-v3"},
-            {"url":"https://api.siliconflow.cn/v1/chat/completions",
+        API_providers = {"url":"https://api.siliconflow.cn/v1/chat/completions",
              "api_key":"sk-ewrcuywrmemcssqkoajdkumoboiozmckjlcmrxehdvrdytyh",
              "model":"deepseek-ai/DeepSeek-V3"},
-            ]
-        choice = random.choice(API_providers)
-        print(choice)
-        return choice,200
+            
+        return API_providers,200
 
     def post(self):
 
@@ -65,22 +59,78 @@ class Alzheimer_class(Resource):
                 "Depression",
                 "HeadInjury",
                 "Hypertension",
-                "SystolicBP",
-                "DiastolicBP",
-                "CholesterolTotal",
-                "CholesterolLDL",
-                "CholesterolHDL",
-                "CholesterolTriglycerides"
             ]
 
             for key in required_keys:
                 if key not in operate_data:
                     return {'result':'failed','message':f'{key} not in operate_data'},400
                 
-            # 下面是输入模型的逻辑
+
+            condition = False # 是否建议立刻就医
+            risk = {} # 风险项目
+            index = 0 # 风险序号
+
+            if float(operate_data['BMI']) > 23.9 : 
+                index += 1
+                risk.update({index:f"BMI偏高（{operate_data['BMI']}），您的体重过高，建议控制体重"})
+
+            if float(operate_data['BMI']) < 18.5 : 
+                index += 1
+                risk.update({index:f"BMI偏低（{operate_data['BMI']}），您的体重过低，建议注意饮食"})
+
+            if "SystolicBP" in operate_data and "DiastolicBP" in operate_data:
+                if float(operate_data['SystolicBP']) > 130 or float(operate_data['DiastolicBP']) > 80 or : 
+                    index += 1
+                    risk.update({index:f"您的血压过高（收缩压{operate_data['SystolicBP']} / 舒张压{operate_data['DiastolicBP']}）"})
+                    condition = True
+            else:
+                if int(operate_data["Hypertension"]) == 1:
+                    index += 1
+                    risk.update({index:f"您患有高血压，请寻找医师获得专业指导"})
+                    condition = True
+            
+            if float(operate_data['AlcoholConsumption']) > 10 : 
+                index += 1
+                risk.update({index:"您饮酒过量，少喝酒有益健康"})
+
+            if float(operate_data['DietQuality']) < 6 : 
+                index += 1
+                risk.update({index:"您的饮食质量较差，请寻找医师获得专业指导"})
+                condition = True
+
+            if float(operate_data['SleepQuality']) < 6 : 
+                index += 1
+                risk.update({index:"您的饮食质量较差，请寻找医师获得专业指导"})
+                condition = True
+
+            if int(operate_data["CardiovascularDisease"]) == 1 :
+                index += 1
+                risk.update({index:"您有心血管疾病，请寻找医师获得专业指导"})
+                condition = True
+
+            if int(operate_data["Diabetes"]) == 1 :
+                index += 1
+                risk.update({index:"您患有糖尿病，请寻找医师获得专业指导"})
+                condition = True
+
+            if int(operate_data["Depression"]) == 1 :
+                index += 1
+                risk.update({index:"您患有抑郁症，请寻找医师获得专业指导"})
+                condition = True
+
+            if int(operate_data["HeadInjury"]) == 1 :
+                index += 1
+                risk.update({index:"您有过头部受伤历史，若严重不适，请寻找医师获得专业指导"})
+            
+
+            # 下面是输入预测模型的逻辑
             try:
-                return predict(operate_data),200
+                possibility = predict(operate_data)
+                messsage = {
+                    "possibility":possibility,
+                    "condition": condition,
+                    "risks": risk,
+                }
+                return {'result':'success','message':messsage},200
             except Exception as e:
                 return {'result':'failed','message':str(e)},400
-            
-    
