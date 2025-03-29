@@ -130,8 +130,10 @@ class Alzheimer_class(Resource):
                 if possibility >= 60 :
                     condition = True # 风险过高
 
+                final_possibility = f"{possibility}%"
+
                 messsage = {
-                    "possibility":possibility,
+                    "possibility":final_possibility,
                     "condition": condition,
                     "risks": risk,
                 }
