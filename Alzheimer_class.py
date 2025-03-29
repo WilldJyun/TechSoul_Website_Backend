@@ -3,6 +3,7 @@ from flask_restful import Resource
 from Global_Vars import *
 # import random
 from alzheimer_infer.infer_with_possibility import predict
+from alzheimer_infer.risk_prompt import  get_not_predict_yet_prompt, get_low_risk_prompt, get_medium_high_risk_prompt, get_medium_low_risk_prompt, get_medium_risk_prompt
 
 content = """她 62 岁了，女性，没怎么上过学。
 身高 150 厘米，体重 55 公斤。她从不抽烟喝酒。
@@ -34,6 +35,15 @@ class Alzheimer_class(Resource):
         
         if 'token' not in data:
             return {'result':'failed','message':'token not in data'},400
+
+        if data['token'] != Global_Alzheimer_Temp_Token: # 验证token，接口鉴权
+            return {'result':'failed','message':'token error'},400
+        
+# ==============================
+        if data['operate'] == 'init': # api：获得尚未自查时的AI提示词
+            return {'result':'success','message':get_not_predict_yet_prompt()},200
+# ==============================
+
         
         if 'operate_data' not in data:
             return {'result':'failed','message':'operate_data not in data'},400
@@ -41,7 +51,12 @@ class Alzheimer_class(Resource):
         # 以上为验证 operate, token, data 的操作
         operate_data = data['operate_data']
 
-        if 'operate' == 'risk': # api: 计算得出风险值
+
+        
+
+
+# ==============================
+        if data['operate'] == 'risk': # api: 计算得出风险值，并得到相关风险、是否建议尽快就医、AI提示词
             required_keys = [ # 检查是否包含所有必要的键！！重要，在此修改
                 "Age",
                 "Gender",
@@ -79,7 +94,7 @@ class Alzheimer_class(Resource):
                 risk.update({str(index):f"BMI偏低（{operate_data['BMI']}），您的体重过低，建议注意饮食"})
 
             if "SystolicBP" in operate_data and "DiastolicBP" in operate_data:
-                if float(operate_data['SystolicBP']) > 130 or float(operate_data['DiastolicBP']) > 80 or : 
+                if float(operate_data['SystolicBP']) > 130 or float(operate_data['DiastolicBP']) > 80 : 
                     index += 1
                     risk.update({str(index):f"您的血压过高（收缩压{operate_data['SystolicBP']} / 舒张压{operate_data['DiastolicBP']}）"})
                     condition = True
@@ -100,7 +115,7 @@ class Alzheimer_class(Resource):
 
             if float(operate_data['SleepQuality']) < 6 : 
                 index += 1
-                risk.update({str(index):"您的饮食质量较差，请寻找医师获得专业指导"})
+                risk.update({str(index):"您的睡眠质量较差，请寻找医师获得专业指导"})
                 condition = True
 
             if int(operate_data["CardiovascularDisease"]) == 1 :
@@ -122,21 +137,79 @@ class Alzheimer_class(Resource):
                 index += 1
                 risk.update({str(index):"您有过头部受伤历史，若严重不适，请寻找医师获得专业指导"})
             
+            if "MMSE" in operate_data:
+                if float(operate_data['MMSE']) <= 23 :
+                    index += 1
+                    risk.update({str(index):f"您的MMSE评分偏低，为{operate_data['MMSE']}，建议您寻找医师获得专业指导"})
+                    condition = True
+
+            if "ADL" in operate_data:
+                if float(operate_data['ADL']) <= 60 :
+                    index += 1
+                    risk.update({str(index):f"您的ADL评分偏低，为{operate_data['ADL']}，建议您寻找医师获得专业指导"})
+                    condition = True
+            if "Confusion" in operate_data:
+                if int(operate_data['Confusion']) == 1:
+                    index += 1
+                    risk.update({str(index): "您有时会感到困惑，建议您寻找医师获得专业指导"})
+                    condition = True
+
+            if "Disorientation" in operate_data:
+                if int(operate_data['Disorientation']) == 1:
+                    index += 1
+                    risk.update({str(index): "您有时会感到方向感迷失，建议您寻找医师获得专业指导"})
+                    condition = True
+
+            if "PersonalityChanges" in operate_data:
+                if int(operate_data['PersonalityChanges']) == 1:
+                    index += 1
+                    risk.update({str(index): "您的人格或行为有变化，建议您寻找医师获得专业指导"})
+                    condition = True
+
+            if "DifficultyCompletingTasks" in operate_data:
+                if int(operate_data['DifficultyCompletingTasks']) == 1:
+                    index += 1
+                    risk.update({str(index): "您在完成日常任务时有困难，建议您寻找医师获得专业指导"})
+                    condition = True
+
+            if "Forgetfulness" in operate_data:
+                if int(operate_data['Forgetfulness']) == 1:
+                    index += 1
+                    risk.update({str(index): "您可能存在健忘情况，建议您寻找医师获得专业指导"})
+                    condition = True
+
+
+            
             # 下面是输入预测模型的逻辑
             try:
                 possibility : int  # 风险值 
                 possibility = predict(operate_data)
 
-                if possibility >= 60 :
-                    condition = True # 风险过高
-
                 final_possibility = f"{possibility}%"
+                age = operate_data['Age']
+
+                if possibility <= 20: # 低风险
+                    prompt = get_low_risk_prompt(age, final_possibility,risk)
+
+                elif possibility > 20 and possibility <= 40: # 中低风险
+                    prompt = get_medium_low_risk_prompt(age, final_possibility,risk)
+
+                elif possibility > 40 and possibility <= 60: # 中风险
+                    prompt = get_medium_risk_prompt(age, final_possibility,risk)
+
+                elif possibility > 60: # 中高风险
+                    prompt = get_medium_high_risk_prompt(age, final_possibility,risk)
+                    condition = True # 此时风险过高，建议用户寻求医师诊断。
 
                 messsage = {
                     "possibility":final_possibility,
                     "condition": condition,
                     "risks": risk,
+                    "prompt": prompt
                 }
                 return {'result':'success','message':messsage},200
             except Exception as e:
                 return {'result':'failed','message':str(e)},400
+# ===========================
+        
+        return {'result':'failed','message':'没有对应的operate选项'},400
