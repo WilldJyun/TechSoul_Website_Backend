@@ -12,8 +12,6 @@ with open('alzheimer_infer/feature_names.pkl', 'rb') as f:
     feature_names = pickle.load(f)
 
 # Load all models
-xgb_model = xgb.XGBClassifier()
-xgb_model.load_model('alzheimer_infer/xgb_model.json')
 
 cat_model = CatBoostClassifier()
 cat_model.load_model('alzheimer_infer/cat_model.cbm')
@@ -48,7 +46,6 @@ def predict_processing(data_dict):
     df = df[feature_names]
     
     # Model predictions (probability of class 1)
-    prob_xgb = xgb_model.predict_proba(df)[0][1]  # P(class=1)
     prob_cat = cat_model.predict_proba(df)[0][1]  # P(class=1)
     prob_gb = gb_model.predict_proba(df)[0][1]    # P(class=1)
     prob_mlp = mlp_model.predict_proba(df)[0][1]  # P(class=1)
@@ -56,7 +53,6 @@ def predict_processing(data_dict):
     
     # Return risk probabilities as a dictionary
     return {
-        "XGBoost": prob_xgb,
         "CatBoost": prob_cat,
         "Gradient Boosting": prob_gb,
         "MLP": prob_mlp,
