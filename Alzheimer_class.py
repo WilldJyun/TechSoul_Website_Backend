@@ -61,7 +61,8 @@ class Alzheimer_class(Resource):
                 "Age",
                 "Gender",
                 "EducationLevel",
-                "BMI",
+                "Height",
+                "Weight",
                 "Smoking",
                 "AlcoholConsumption", # 从0~20个酒精单位
                 "PhysicalActivity",
@@ -80,6 +81,10 @@ class Alzheimer_class(Resource):
                     return {'result':'failed','message':f'{key} not in operate_data'},400
                 
             operate_data.update({"Ethnicity":2}) # 为亚洲人设计，默认为 2
+            weight = int(operate_data["Weight"])
+            height = int(operate_data["Height"])
+            bmi = round(weight / (height/100)**2,1)
+            operate_data.update({"BMI": bmi})
 
             condition = False # 是否建议立刻就医
             risk = {} # 风险项目
@@ -184,7 +189,7 @@ class Alzheimer_class(Resource):
                 possibility : int  # 风险值 
                 possibility = predict(operate_data)
 
-                final_possibility = f"{possibility}%"
+                final_possibility = f"{possibility}"
                 age = operate_data['Age']
                 gender = operate_data['Gender']
                 if int(gender) == 0:
