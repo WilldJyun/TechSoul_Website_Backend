@@ -95,12 +95,12 @@ class Alzheimer_class(Resource):
             else:
                 if int(operate_data["Hypertension"]) == 1:
     
-                    risk.update({"高血压":f"您患有高血压"})
+                    risk.update({"高血压":f"您患有高血压，高血压是阿尔兹海默症的风险因素之一"})
                     condition = True
             
             if float(operate_data['AlcoholConsumption']) > 10 : 
 
-                risk.update({"饮酒过量":"您饮酒过量，少喝酒有益健康"})
+                risk.update({"饮酒过量":"您饮酒过量，少喝酒有益健康。酗酒或在短时间内大量饮酒容易引发痴呆。"})
 
             if float(operate_data['DietQuality']) < 6 : 
 
@@ -109,22 +109,22 @@ class Alzheimer_class(Resource):
 
             if float(operate_data['SleepQuality']) < 6 : 
 
-                risk.update({"睡眠质量待提高":"您的睡眠质量较差"})
+                risk.update({"睡眠质量待提高":"您的睡眠质量较差，良好的睡眠有助于预防阿尔兹海默症"})
                 condition = True
 
             if int(operate_data["CardiovascularDisease"]) == 1 :
 
-                risk.update({"心血管疾病":"您有心血管疾病"})
+                risk.update({"心血管疾病":"您有心血管疾病，需要重视"})
                 condition = True
 
             if int(operate_data["Diabetes"]) == 1 :
 
-                risk.update({"糖尿病需重视":"您患有糖尿病"})
+                risk.update({"糖尿病需重视":"您患有糖尿病，可能会加速阿尔兹海默症病程发展"})
                 condition = True
 
             if int(operate_data["Depression"]) == 1 :
 
-                risk.update({"抑郁症需重视":"您患有抑郁症"})
+                risk.update({"抑郁症需重视":"可能会诱发阿尔兹海默症，但并不绝对，请放宽心"})
                 condition = True
 
             if int(operate_data["HeadInjury"]) == 1 :
