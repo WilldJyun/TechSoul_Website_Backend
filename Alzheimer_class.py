@@ -95,7 +95,7 @@ class Alzheimer_class(Resource):
             else:
                 if int(operate_data["Hypertension"]) == 1:
     
-                    risk.update({"高血压":f"您患有高血压，请寻找医师获得专业指导"})
+                    risk.update({"高血压":f"您患有高血压"})
                     condition = True
             
             if float(operate_data['AlcoholConsumption']) > 10 : 
@@ -104,27 +104,27 @@ class Alzheimer_class(Resource):
 
             if float(operate_data['DietQuality']) < 6 : 
 
-                risk.update({"饮食质量待提高":"您的饮食质量较差，请寻找医师获得专业指导"})
+                risk.update({"饮食质量待提高":"您的饮食质量较差"})
                 condition = True
 
             if float(operate_data['SleepQuality']) < 6 : 
 
-                risk.update({"睡眠质量待提高":"您的睡眠质量较差，请寻找医师获得专业指导"})
+                risk.update({"睡眠质量待提高":"您的睡眠质量较差"})
                 condition = True
 
             if int(operate_data["CardiovascularDisease"]) == 1 :
 
-                risk.update({"心血管疾病":"您有心血管疾病，请寻找医师获得专业指导"})
+                risk.update({"心血管疾病":"您有心血管疾病"})
                 condition = True
 
             if int(operate_data["Diabetes"]) == 1 :
 
-                risk.update({"糖尿病需重视":"您患有糖尿病，请寻找医师获得专业指导"})
+                risk.update({"糖尿病需重视":"您患有糖尿病"})
                 condition = True
 
             if int(operate_data["Depression"]) == 1 :
 
-                risk.update({"抑郁症需重视":"您患有抑郁症，请寻找医师获得专业指导"})
+                risk.update({"抑郁症需重视":"您患有抑郁症"})
                 condition = True
 
             if int(operate_data["HeadInjury"]) == 1 :
@@ -134,42 +134,42 @@ class Alzheimer_class(Resource):
             if "MMSE" in operate_data:
                 if float(operate_data['MMSE']) <= 23 :
     
-                    risk.update({"MMSE评分低":f"您的MMSE评分偏低，为{operate_data['MMSE']}，建议您寻找医师获得专业指导"})
+                    risk.update({"MMSE评分低":f"您的MMSE评分偏低，为{operate_data['MMSE']}"})
                     condition = True
 
             if "ADL" in operate_data:
                 if float(operate_data['ADL']) <= 60 :
     
-                    risk.update({"ADL评分低":f"您的ADL评分偏低，为{operate_data['ADL']}，建议您寻找医师获得专业指导"})
+                    risk.update({"ADL评分低":f"您的ADL量表评分偏低，为{operate_data['ADL']}"})
                     condition = True
             if "Confusion" in operate_data:
                 if int(operate_data['Confusion']) == 1:
     
-                    risk.update({"感到困惑": "您有时会感到困惑，建议您寻找医师获得专业指导"})
+                    risk.update({"感到困惑": "患阿尔兹海默症的老人常常感到迷茫与困惑，甚至在熟悉的地方也如此"})
                     condition = True
 
             if "Disorientation" in operate_data:
                 if int(operate_data['Disorientation']) == 1:
     
-                    risk.update({"迷失方向感": "您有时会感到方向感迷失，建议您寻找医师获得专业指导"})
+                    risk.update({"迷失方向感": "患阿尔茨海默症的老人初期在方向感上“会出现偏差”，尤其“总会高估自己转弯的角度"})
                     condition = True
 
             if "PersonalityChanges" in operate_data:
                 if int(operate_data['PersonalityChanges']) == 1:
     
-                    risk.update({"人格行为变化": "您的人格或行为有变化，建议您寻找医师获得专业指导"})
+                    risk.update({"性格行为变化": "责任心强、神经质程度低等性格人格可以延缓或防止阿尔兹海默症"})
                     condition = True
 
             if "DifficultyCompletingTasks" in operate_data:
                 if int(operate_data['DifficultyCompletingTasks']) == 1:
     
-                    risk.update({"对事务感到棘手": "您在完成日常任务时有困难，建议您寻找医师获得专业指导"})
+                    risk.update({"对事务感到棘手": "您在完成日常任务时有困难"})
                     condition = True
 
             if "Forgetfulness" in operate_data:
                 if int(operate_data['Forgetfulness']) == 1:
     
-                    risk.update({"健忘": "您可能存在健忘情况，建议您寻找医师获得专业指导"})
+                    risk.update({"健忘": "建议关注自身的记忆力情况"})
                     condition = True
 
 
