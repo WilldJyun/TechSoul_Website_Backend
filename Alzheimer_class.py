@@ -151,7 +151,7 @@ class Alzheimer_class(Resource):
             if "Disorientation" in operate_data:
                 if int(operate_data['Disorientation']) == 1:
     
-                    risk.update({"迷失方向感": "患阿尔茨海默症的老人初期在方向感上“会出现偏差”，尤其“总会高估自己转弯的角度"})
+                    risk.update({"迷失方向感": "患阿尔茨海默症的老人初期在方向感上“会出现偏差”，尤其“总会高估自己转弯的角度”"})
                     condition = True
 
             if "PersonalityChanges" in operate_data:
