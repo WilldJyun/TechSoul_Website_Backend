@@ -9,8 +9,9 @@ class Alzheimer_class(Resource):
 
     def get(self):
         API_providers = {"url":"https://api.siliconflow.cn/v1/chat/completions",
-             "api_key":"sk-ewrcuywrmemcssqkoajdkumoboiozmckjlcmrxehdvrdytyh",
-             "model":"deepseek-ai/DeepSeek-V3"},
+             "api_key":"Bearer sk-ewrcuywrmemcssqkoajdkumoboiozmckjlcmrxehdvrdytyh",
+             "model":"deepseek-ai/DeepSeek-V3",
+             'message':get_not_predict_yet_prompt()},
             
         return API_providers,200
 
@@ -29,9 +30,6 @@ class Alzheimer_class(Resource):
         if data['token'] != Global_Alzheimer_Temp_Token: # 验证token，接口鉴权
             return {'result':'failed','message':'token error'},400
         
-# ==============================
-        if data['operate'] == 'init': # api：获得尚未自查时的AI提示词
-            return {'result':'success','message':get_not_predict_yet_prompt()},200
 # ==============================
 
         
