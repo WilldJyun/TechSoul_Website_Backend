@@ -11,7 +11,7 @@ class Alzheimer_class(Resource):
         API_providers = {"url":"https://api.siliconflow.cn/v1/chat/completions",
              "api_key":"Bearer sk-ewrcuywrmemcssqkoajdkumoboiozmckjlcmrxehdvrdytyh",
              "model":"deepseek-ai/DeepSeek-V3",
-             'message':get_not_predict_yet_prompt()},
+             'message':get_not_predict_yet_prompt()+"\n请以markdown格式输出"},
             
         return API_providers,200
 
@@ -177,7 +177,8 @@ class Alzheimer_class(Resource):
                 possibility : int  # 风险值 
                 possibility = predict(operate_data)
 
-                final_possibility = f"{possibility}"
+                possibility_percentage : str # 带百分号的风险值
+                possibility_percentage = f"{possibility}%"
                 age = operate_data['Age']
                 gender = operate_data['Gender']
                 if int(gender) == 0:
@@ -186,20 +187,20 @@ class Alzheimer_class(Resource):
                     the_gender = "女"
 
                 if possibility <= 20: # 低风险
-                    prompt = get_low_risk_prompt(age, the_gender, final_possibility,risk)
+                    prompt = get_low_risk_prompt(age, the_gender, possibility_percentage,risk)+"\n请以markdown格式输出"
 
                 elif possibility > 20 and possibility <= 40: # 中低风险
-                    prompt = get_medium_low_risk_prompt(age, the_gender, final_possibility,risk)
+                    prompt = get_medium_low_risk_prompt(age, the_gender, possibility_percentage,risk)+"\n请以markdown格式输出"
 
                 elif possibility > 40 and possibility <= 60: # 中风险
-                    prompt = get_medium_risk_prompt(age, the_gender, final_possibility,risk)
+                    prompt = get_medium_risk_prompt(age, the_gender, possibility_percentage,risk)+"\n请以markdown格式输出"
 
                 elif possibility > 60: # 中高风险
-                    prompt = get_medium_high_risk_prompt(age, the_gender, final_possibility,risk)
+                    prompt = get_medium_high_risk_prompt(age, the_gender, possibility_percentage,risk)+"\n请以markdown格式输出"
                     condition = True # 此时风险过高，建议用户寻求医师诊断。
 
                 messsage = {
-                    "possibility":final_possibility,
+                    "possibility":possibility,
                     "condition": condition,
                     "risks": risk,
                     "prompt": prompt

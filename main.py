@@ -8,6 +8,7 @@ from Global_Vars import *
 from database_operate_module import *
 from GPA_class import GPA_class
 from Alzheimer_class import Alzheimer_class
+from Pic_bed import Pic_bed_class
 
 app = Flask (__name__)
 api = Api(app)
@@ -37,6 +38,7 @@ class Schedule(Resource):
                 return {'result': 'failed','message': 'The schedule is not exist.'},404
         else:
             return {'result': 'failed','message': 'Week parameter is required'}, 400
+       
             
 api.add_resource(Schedule, '/api/schedule')
 
@@ -56,6 +58,9 @@ class Test(Resource):
         return a.Select_Database("Notifications","")
 
 api.add_resource(Test, '/api/Test') # 监听路由
+
+# 自制图床
+api.add_resource(Pic_bed_class, '/api/pic')
 
 if __name__ == '__main__':
     app.run(host="0.0.0.0",port=5000)
