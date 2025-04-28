@@ -13,9 +13,25 @@ from Pic_bed import Pic_bed_class
 app = Flask (__name__)
 api = Api(app)
 
-# 启用CORS
-CORS(app, resources={r"/*": {"origins": "*", "headers": ["Origin", "X-Requested-With", "Content-Type", "token", "Accept"]}})
+allowed_origins = [
+    "https://ai.tengchuang.top",
+    "https://tengchuang.top"
+]
+
+def cors_allow(app):
+    @app.after_request
+    def add_cors_headers(response):
+        origin = request.headers.get('Origin')
+        if origin in allowed_origins:
+            response.headers['Access-Control-Allow-Origin'] = origin
+            response.headers['Access-Control-Allow-Headers'] = "Origin, X-Requested-With, Content-Type, token, Accept"
+        return response
+    return app
+
+app = cors_allow(app)
+CORS(app)
 # 处理课表返回逻辑
+
 
 
 class Schedule(Resource):
